@@ -33,7 +33,7 @@ func main() {
 		Address: "192.168.1.10/32",
 	}
 
-	// Exec iptables
+	// Exec ipset
 	err = config.Add(&entry)
 	if err != nil {
 		log.Fatal(err)
