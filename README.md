@@ -17,10 +17,10 @@ import (
 // !!! Requires root privileges
 //
 // Create ipset
-// ipset create Test hash:net family inet
+// ipset create AddTest hash:net family inet
 func main() {
 	// Create config: path to ipset bin and name of set.
-	config, err := ipset.NewConfig("/usr/sbin/ipset", "Test")
+	config, err := ipset.NewConfig("/usr/sbin/ipset", "AddTest")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -41,6 +41,42 @@ func main() {
 }
 ```
 
+### Delete entry from ipset
+
+```go
+package main
+
+import (
+	"log"
+	"os"
+
+	"github.com/exsver/go-ipset"
+)
+
+// !!! Requires root privileges
+//
+// Create and fill new ipset
+//   ipset create DelTest hash:net family inet
+//   ipset add DelTest 10.0.0.1
+//   ipset add DelTest 10.0.1.0/24
+func main() {
+	// Create config: path to ipset bin and name of set.
+	config, err := ipset.NewConfig("/usr/sbin/ipset", "DelTest")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Optional: Set debug logger
+	config.SetLogger(log.New(os.Stdout, "Debug: ", 0))
+
+	// Del entry from ipset
+	err = config.Del("10.0.0.1")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
 ### Flush ipset
 
 ```go
@@ -50,7 +86,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/exsver/go-iptables"
+	"github.com/exsver/go-ipset"
 )
 
 // !!! Requires root privileges
@@ -70,7 +106,7 @@ func main() {
 	config.SetLogger(log.New(os.Stdout, "Debug: ", 0))
 
 	// Flush ipset
-	err := config.Flush()
+	err = config.Flush()
 	if err != nil {
 		log.Fatal(err)
 	}
