@@ -87,9 +87,11 @@ func (c *Config) execCombined(args []string) (string, error) {
 	cmd := exec.CommandContext(context.Background(), c.Path, args...)
 
 	combinedOutput, err := cmd.CombinedOutput()
+	combinedOutputString := strings.TrimSpace(string(combinedOutput))
+
 	if err != nil {
-		c.Logger.Printf("exec error '%s' '%s'", strings.TrimSpace(string(combinedOutput)), err.Error())
+		c.Logger.Printf("exec error '%s' '%s'", combinedOutputString, err.Error())
 	}
 
-	return strings.TrimSpace(string(combinedOutput)), nil
+	return combinedOutputString, err
 }
