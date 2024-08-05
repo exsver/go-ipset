@@ -55,6 +55,19 @@ func (c *Config) do(args []string) error {
 	return nil
 }
 
+func (c *Config) get(args []string) (string, error) {
+	stdout, stderr, err := c.exec(args)
+	if err != nil {
+		return stdout, err
+	}
+
+	if stderr != "" {
+		return stdout, errors.New(stderr)
+	}
+
+	return stdout, nil
+}
+
 func (c *Config) exec(args []string) (string, string, error) {
 	c.Logger.Printf("exec '%s %s'", c.Path, strings.Join(args, " "))
 	cmd := exec.CommandContext(context.Background(), c.Path, args...)
@@ -66,7 +79,7 @@ func (c *Config) exec(args []string) (string, string, error) {
 
 	err := cmd.Run()
 	if err != nil {
-		c.Logger.Printf("exec error '%s' '%s' '%s'", stdout.String(), stderr.String(), err.Error())
+		c.Logger.Printf("exec error '%s' '%s' '%s'", strings.TrimSpace(stdout.String()), strings.TrimSpace(stderr.String()), err.Error())
 		return stdout.String(), stderr.String(), fmt.Errorf("error while executing command: %v", err)
 	}
 

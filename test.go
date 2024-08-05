@@ -6,7 +6,7 @@ func (c *Config) Test(address string) bool {
 
 	args := []string{"test", c.Set, address}
 
-	err := c.do(args)
+	_, err := c.get(args)
 	if err != nil {
 		return false
 	}
