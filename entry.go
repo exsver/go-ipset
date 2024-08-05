@@ -3,7 +3,6 @@ package ipset
 import (
 	"fmt"
 	"math"
-	"net"
 	"strconv"
 )
 
@@ -31,16 +30,4 @@ func (e *Entry) GenArgs() ([]string, error) {
 	}
 
 	return args, nil
-}
-
-func isStringValidCidrOrIP(s string) bool {
-	if net.ParseIP(s) != nil {
-		return true
-	}
-
-	if _, _, err := net.ParseCIDR(s); err == nil {
-		return true
-	}
-
-	return false
 }
