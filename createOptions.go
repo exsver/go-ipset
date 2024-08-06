@@ -24,7 +24,9 @@ func (o *CreateOptions) GenArgs() ([]string, error) {
 
 	// Type
 	switch o.Type {
-	case "hash:ip", "hash:mac", "hash:ip,mac", "hash:net", "hash:net,net", "hash:ip,port", "hash:net,port", "hash:ip,port,ip", "hash:ip,port,net", "hash:ip,mark", "hash:net,port,net", "hash:net,iface", :
+	case "bitmap:ip", "bitmap:ip,mac", "bitmap:port":
+		args = append(args, o.Type)
+	case "hash:ip", "hash:mac", "hash:ip,mac", "hash:net", "hash:net,net", "hash:ip,port", "hash:net,port", "hash:ip,port,ip", "hash:ip,port,net", "hash:ip,mark", "hash:net,port,net", "hash:net,iface":
 		args = append(args, o.Type)
 		if o.MaxElem != 0 {
 			args = append(args, "maxelem", strconv.Itoa(o.MaxElem))
