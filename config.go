@@ -20,6 +20,8 @@ type Config struct {
 	Set string
 	// Logger - debug logger
 	Logger *log.Logger
+	// IgnoreExist adds "-exist" option
+	IgnoreExist bool
 }
 
 func (c *Config) String() string {
@@ -36,6 +38,10 @@ func NewConfig(path string, set string) (*Config, error) {
 
 func (c *Config) SetLogger(logger *log.Logger) {
 	c.Logger = logger
+}
+
+func (c *Config) SetIgnoreExist(ignore bool) {
+	c.IgnoreExist = ignore
 }
 
 func (c *Config) do(args []string) error {
