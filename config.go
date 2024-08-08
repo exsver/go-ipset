@@ -61,7 +61,7 @@ func (c *Config) do(args []string) error {
 	return nil
 }
 
-func (c *Config) get(args []string) (string, error) {
+func (c *Config) get(args []string) ([]byte, error) {
 	out, err := c.execCombined(args)
 	if err != nil {
 		return out, err
@@ -88,16 +88,14 @@ func (c *Config) exec(args []string) (string, string, error) {
 	return stdout.String(), stderr.String(), nil
 }
 
-func (c *Config) execCombined(args []string) (string, error) {
+func (c *Config) execCombined(args []string) ([]byte, error) {
 	c.Logger.Printf("exec '%s %s'", c.Path, strings.Join(args, " "))
 	cmd := exec.CommandContext(context.Background(), c.Path, args...)
 
 	combinedOutput, err := cmd.CombinedOutput()
-	combinedOutputString := strings.TrimSpace(string(combinedOutput))
-
 	if err != nil {
-		c.Logger.Printf("exec error '%s' '%s'", combinedOutputString, err.Error())
+		c.Logger.Printf("exec error '%s' '%s'", strings.TrimSpace(string(combinedOutput)), err.Error())
 	}
 
-	return combinedOutputString, err
+	return combinedOutput, err
 }
