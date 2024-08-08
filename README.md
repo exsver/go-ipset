@@ -2,6 +2,43 @@
 Go bindings for ipset
 
 ## Examples
+### Create new Ipset
+```go
+package main
+
+import (
+	"log"
+	"os"
+
+	"github.com/exsver/go-ipset"
+)
+
+// !!! Requires root privileges
+func main() {
+	// Create config: path to ipset bin and name of set.
+	config, err := ipset.NewConfig("/usr/sbin/ipset", "CreateTest")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Optional: Set debug logger
+	config.SetLogger(log.New(os.Stdout, "Debug: ", 0))
+
+	// Prepare options
+	createOptions := ipset.CreateOptions{
+		Type:     "hash:net",
+		Counters: false,
+		Comment:  false,
+	}
+
+	// Exec ipset
+	err = config.Create(&createOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
 ### Add Entry to existing ipset
 
 ```go
