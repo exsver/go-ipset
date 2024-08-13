@@ -8,6 +8,12 @@ func (c *Config) Create(options *CreateOptions) error {
 	}
 
 	args := []string{"create", c.Set}
+
+	// -exist
+	if c.IgnoreExist {
+		args = append(args, "-exist")
+	}
+
 	args = append(args, optionsArgs...)
 
 	// logger

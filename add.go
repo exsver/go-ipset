@@ -10,6 +10,12 @@ func (c *Config) Add(entry *Entry) error {
 	}
 
 	args := []string{"add", c.Set}
+
+	// -exist
+	if c.IgnoreExist {
+		args = append(args, "-exist")
+	}
+
 	args = append(args, entryArgs...)
 
 	// logger
