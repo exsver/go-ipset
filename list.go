@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func List(c *Config) (*Ipset, error) {
+func (c *Config) List() (*Ipset, error) {
 	args := []string{"list", c.Set, "-output", "xml"}
 
 	// logger
