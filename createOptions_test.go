@@ -74,6 +74,30 @@ func TestCreateOptions_GenArgs(t *testing.T) {
 			},
 			want: []string{"bitmap:ip"},
 		},
+		{
+			name: "negative timeout",
+			fields: fields{
+				Type:    "hash:ip",
+				Timeout: -1,
+			},
+			wantErr: true,
+		},
+		{
+			name: "timeout too large",
+			fields: fields{
+				Type:    "hash:ip",
+				Timeout: maxTimeout + 1,
+			},
+			wantErr: true,
+		},
+		{
+			name: "negative maxelem",
+			fields: fields{
+				Type:    "hash:ip",
+				MaxElem: -1,
+			},
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {

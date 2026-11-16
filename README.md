@@ -2,7 +2,7 @@
 Go bindings for ipset
 
 ## Examples
-### Create new Ipset
+### Create a new Ipset
 ```go
 package main
 
@@ -39,7 +39,7 @@ func main() {
 }
 ```
 
-### Add Entry to existing ipset
+### Add Entry to the existing ipset
 
 ```go
 package main
