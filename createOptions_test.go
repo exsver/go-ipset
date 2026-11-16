@@ -109,11 +109,13 @@ func TestCreateOptions_GenArgs(t *testing.T) {
 				Comment:  tt.fields.Comment,
 				MaxElem:  tt.fields.MaxElem,
 			}
+
 			got, err := o.GenArgs()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GenArgs() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GenArgs() got = %v, want %v", got, tt.want)
 			}
