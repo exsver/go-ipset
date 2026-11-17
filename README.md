@@ -190,6 +190,40 @@ func main() {
 }
 ```
 
+### Rename ipset
+
+```go
+package main
+
+import (
+	"log"
+	"os"
+
+	"github.com/exsver/go-ipset"
+)
+
+// !!! Requires root privileges
+//
+// Create new ipset
+//   ipset create RenameTest hash:net family inet
+func main() {
+	// Create config: path to ipset bin and name of set.
+	config, err := ipset.NewConfig("/usr/sbin/ipset", "RenameTest")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Optional: Set debug logger
+	config.SetLogger(log.New(os.Stdout, "Debug: ", 0))
+
+	// Rename ipset. On success, config.Set is updated to the new name.
+	err = config.Rename("RenamedTest")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
 ### List ipset
 
 ```go
