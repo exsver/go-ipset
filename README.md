@@ -156,6 +156,40 @@ func main() {
 }
 ```
 
+### Destroy ipset
+
+```go
+package main
+
+import (
+	"log"
+	"os"
+
+	"github.com/exsver/go-ipset"
+)
+
+// !!! Requires root privileges
+//
+// Create new ipset
+//   ipset create DestroyTest hash:net family inet
+func main() {
+	// Create config: path to ipset bin and name of set.
+	config, err := ipset.NewConfig("/usr/sbin/ipset", "DestroyTest")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Optional: Set debug logger
+	config.SetLogger(log.New(os.Stdout, "Debug: ", 0))
+
+	// Destroy ipset
+	err = config.Destroy()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
 ### List ipset
 
 ```go
