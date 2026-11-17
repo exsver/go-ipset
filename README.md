@@ -224,6 +224,42 @@ func main() {
 }
 ```
 
+### Swap ipsets
+
+```go
+package main
+
+import (
+	"log"
+	"os"
+
+	"github.com/exsver/go-ipset"
+)
+
+// !!! Requires root privileges
+//
+// Create two ipsets of compatible types
+//   ipset create SwapTest hash:net family inet
+//   ipset create SwapTestTmp hash:net family inet
+//   ipset add SwapTestTmp 10.0.0.1
+func main() {
+	// Create config: path to ipset bin and name of set.
+	config, err := ipset.NewConfig("/usr/sbin/ipset", "SwapTest")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Optional: Set debug logger
+	config.SetLogger(log.New(os.Stdout, "Debug: ", 0))
+
+	// Swap the content of SwapTest and SwapTestTmp
+	err = config.Swap("SwapTestTmp")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
 ### List ipset
 
 ```go
