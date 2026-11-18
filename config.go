@@ -29,6 +29,14 @@ func (c *Config) String() string {
 }
 
 func NewConfig(path string, set string) (*Config, error) {
+	if set == "" {
+		return nil, errors.New("set name is cannot be empty")
+	}
+
+	if len(set) > 31 {
+		return nil, errors.New("set name is longer than 31 characters")
+	}
+
 	return &Config{
 		Path:   path,
 		Set:    set,
